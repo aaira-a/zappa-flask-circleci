@@ -33,3 +33,9 @@ jobs:
           command: |
             . venv/bin/activate
             python -m pytest -v
+
+      - run:
+          name: deploy to aws using zappa
+          command: |
+            . venv/bin/activate
+            zappa deploy dev
