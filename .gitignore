@@ -1,0 +1,6 @@
+*.pyc
+.coverage
+htmlcov/
+venv/
+zappa-flask-circleci.sublime-project
+zappa-flask-circleci.sublime-workspace
