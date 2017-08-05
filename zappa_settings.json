@@ -2,7 +2,7 @@
     "dev": {
         "app_function": "my_app.app",
         "aws_region": "us-west-2",
-        "keep-warm": false,
+        "keep_warm": false,
         "s3_bucket": "zappa-flask-circleci1"
     }
 }
