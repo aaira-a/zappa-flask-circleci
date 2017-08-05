@@ -3,7 +3,6 @@
         "app_function": "my_app.app",
         "aws_region": "us-west-2",
         "keep-warm": false,
-        "profile_name": "default",
         "s3_bucket": "zappa-flask-circleci1"
     }
 }
