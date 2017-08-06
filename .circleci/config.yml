@@ -5,7 +5,7 @@ jobs:
     docker:
       - image: circleci/python:3.6.1
 
-    working_directory: ~/zfc
+    working_directory: ~/repo
 
     steps:
       - checkout
@@ -38,4 +38,4 @@ jobs:
           name: deploy to aws using zappa
           command: |
             . venv/bin/activate
-            zappa undeploy dev --yes
+            zappa deploy

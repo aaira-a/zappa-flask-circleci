@@ -3,6 +3,7 @@
         "app_function": "my_app.app",
         "aws_region": "us-west-2",
         "keep_warm": false,
+        "project_name": "zfc",
         "s3_bucket": "zappa-flask-circleci1"
     }
 }
