@@ -1,20 +1,20 @@
 
 version: 2
 jobs:
-  build:
+  build-and-test:
     docker:
       - image: circleci/python:3.6.1
 
-    working_directory: ~/repo
+    working_directory: ~/zfc
 
     steps:
       - checkout
 
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "requirements.txt" }}
+          - v2-dependencies-{{ checksum "requirements.txt" }}
           # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+          - v2-dependencies-
 
       - run:
           name: install dependencies
@@ -26,7 +26,7 @@ jobs:
       - save_cache:
           paths:
             - ./venv
-          key: v1-dependencies-{{ checksum "requirements.txt" }}
+          key: v2-dependencies-{{ checksum "requirements.txt" }}
         
       - run:
           name: run tests
@@ -34,8 +34,51 @@ jobs:
             . venv/bin/activate
             python -m pytest -v
 
+  deploy:
+    docker:
+      - image: circleci/python:3.6.1
+
+    working_directory: ~/zfc
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+          - v2-dependencies-{{ checksum "requirements.txt" }}
+          # fallback to using the latest cache if no exact match is found
+          - v2-dependencies-
+
       - run:
-          name: deploy to aws using zappa
+          name: install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
+
+      - save_cache:
+          paths:
+            - ./venv
+          key: v2-dependencies-{{ checksum "requirements.txt" }}
+
+      - run:
+          name: deploy to aws using zappa (update existing)
           command: |
             . venv/bin/activate
-            zappa deploy
+            zappa update dev
+
+      - run:
+          name: deploy to aws using zappa (deploy for first time)
+          command: |
+            . venv/bin/activate
+            zappa update dev
+          when: on_fail
+
+workflows:
+  version: 2
+  build-test-and-deploy:
+    jobs:
+      - build-and-test
+      - deploy:
+          requires:
+            - build-and-test
