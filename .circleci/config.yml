@@ -36,4 +36,4 @@ jobs:
           name: deploy to aws using zappa
           command: |
             . venv/bin/activate
-            zappa undeploy dev --yes
+            zappa deploy dev
