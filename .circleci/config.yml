@@ -65,12 +65,27 @@ jobs:
           name: deploy to aws using zappa (update existing)
           command: |
             . venv/bin/activate
+            
+            ### without explicit unschedule, update command does not remove
+            ### any deployed schedule which was removed from zappa_settings
+            
+            zappa unschedule dev
+            
+            ### update command also deploys any undeployed schedule
+            ### and updates existing schedule (eg frequency)
+            
             zappa update dev
 
       - run:
           name: deploy to aws using zappa (deploy for first time)
           command: |
             . venv/bin/activate
+
+            ### deploy command deploys functions, api gateway and schedules
+            ### calling this on already deployed project will fail the job
+            ### this is for fallback for first time deploy
+            ### as workaround, rerun the workflow if this fails
+
             zappa deploy dev
           when: on_fail
 
