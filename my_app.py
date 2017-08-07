@@ -21,7 +21,6 @@ def status():
     return (f"hi {name}, it's {status}!")
 
 
-@app.route("/scheduled", methods=['GET'])
 def scheduled():
     mydatetime = datetime.datetime.utcnow()
     mystring = (f"schedule triggered on {mydatetime}")

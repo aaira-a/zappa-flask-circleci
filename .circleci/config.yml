@@ -65,7 +65,7 @@ jobs:
           name: deploy to aws using zappa (update existing)
           command: |
             . venv/bin/activate
-            zappa unschedule dev
+            zappa update dev
 
       - run:
           name: deploy to aws using zappa (deploy for first time)
