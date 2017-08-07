@@ -1,5 +1,6 @@
 import unittest
 from my_app import app
+from my_app import scheduled
 
 
 class AppTests(unittest.TestCase):
@@ -15,3 +16,10 @@ class AppTests(unittest.TestCase):
         response = self.app.post("/status",
                                  data={"name": "bob", "status": "alive"})
         self.assertIn(b"hi bob, it's alive!", response.data)
+
+    def test_scheduled_view_should_return_scheduled_string(self):
+        response = self.app.get("/scheduled")
+        self.assertIn(b"schedule triggered on", response.data)
+
+    def test_scheduled_direct_call_should_return_scheduled_string(self):
+        self.assertIn("schedule triggered on", scheduled())
