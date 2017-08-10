@@ -1,5 +1,6 @@
 import datetime
 import logging
+import os
 
 from flask import Flask, request
 
@@ -19,6 +20,11 @@ def status():
     name = request.form.get("name")
     status = request.form.get("status")
     return (f"hi {name}, it's {status}!")
+
+
+@app.route("/envvar", methods=['GET'])
+def envvar():
+    return os.environ["ENV_VAR_1"]
 
 
 def scheduled():

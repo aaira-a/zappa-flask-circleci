@@ -1,0 +1,8 @@
+{
+    "stage1": {
+        "key1": "value1",
+        "aws_environment_variables": {
+        },
+        "key3": "value3"
+    }
+}

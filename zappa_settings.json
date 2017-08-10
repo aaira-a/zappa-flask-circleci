@@ -5,6 +5,8 @@
             "expression": "rate(5 minutes)"
         }],
         "app_function": "my_app.app",
+        "aws_environment_variables": {
+        },
         "aws_region": "us-west-2",
         "keep_warm": false,
         "s3_bucket": "zappa-flask-circleci1"
